@@ -1,0 +1,49 @@
+﻿using RampUpProjectBE.Models.DTOs;
+using RampUpProjectBE.Services;
+using RampUpProjectBE.Utils;
+using System.Threading;
+using System.Web.Http.Controllers;
+
+namespace RampUpProjectBE.Filters {
+    /// <summary>
+    /// Custom Authentication Filter Extending basic Authentication
+    /// </summary>
+    public class ApiAuthenticationFilter : GenericAuthenticationFilter {
+        /// <summary>
+        /// Default Authentication Constructor
+        /// </summary>
+        public ApiAuthenticationFilter() {
+        }
+
+        /// <summary>
+        /// AuthenticationFilter constructor with isActive parameter
+        /// </summary>
+        /// <param name="isActive"></param>
+        public ApiAuthenticationFilter(bool isActive)
+            : base(isActive) {
+        }
+
+        /// <summary>
+        /// Protected overriden method for authorizing user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="actionContext"></param>
+        /// <returns></returns>
+        protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext) {
+            var provider = actionContext.ControllerContext.Configuration.DependencyResolver.GetService(typeof(UserService)) as UserService;
+            if (provider != null) {
+                UserDTO user = provider.Login(username, password.ConvertToSecureString());
+
+                if (user != null) { 
+                    var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+                    if (basicAuthenticationIdentity != null) {
+                        basicAuthenticationIdentity.UserId = user.User_Id;
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}

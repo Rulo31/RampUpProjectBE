@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5c85c0b97a934ba1951c56c2dc6bd59c" Name="Diagram1">
+        <EntityTypeShape EntityType="RampUpProjectModel.Address" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Branch" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Business" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Card" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Field" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Payment" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Payment_Method_Ref" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Payment_Status_Ref" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.PayPal" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Phone" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Reservation" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.User" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RampUpProjectModel.User_Payment" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Branch_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_User_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Branch_Business" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Field_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Phone_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Card_User" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_User_Payment_Card_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Payment_Payment_Status_Ref_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_User_Payment_Payment_Method_Ref" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_User_Payment_PayPal_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Phone_User" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Reservation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="RampUpProjectModel.FK_Reservation_Field" />
+        <EntityTypeShape EntityType="RampUpProjectModel.Log" Width="1.5" PointX="10.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

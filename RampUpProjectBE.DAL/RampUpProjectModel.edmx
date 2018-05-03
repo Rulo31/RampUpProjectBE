@@ -1,0 +1,980 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RampUpProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Address_Id" />
+          </Key>
+          <Property Name="First_Line" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Second_Line" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Postal_Code" Type="int" />
+          <Property Name="Creation_Date" Type="datetime" Nullable="false" />
+          <Property Name="Address_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Branch_Id" />
+          </Key>
+          <Property Name="Branch_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Business_Id" Type="int" Nullable="false" />
+          <Property Name="Address_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="Creation_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Business">
+          <Key>
+            <PropertyRef Name="Business_Id" />
+          </Key>
+          <Property Name="Business_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Creation_Date" Type="datetime" />
+          <Property Name="User_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Card_Id" />
+          </Key>
+          <Property Name="Card_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+          <Property Name="Card_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CVC" Type="int" Nullable="false" />
+          <Property Name="Expiration_Date" Type="datetime" Nullable="false" />
+          <Property Name="Creation_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Field">
+          <Key>
+            <PropertyRef Name="Field_Id" />
+          </Key>
+          <Property Name="Field_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Branch_Id" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Width" Type="float" />
+          <Property Name="Length" Type="float" />
+          <Property Name="Material" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cost" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Log_Id" />
+          </Key>
+          <Property Name="Log_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Log_Function" Type="nvarchar" MaxLength="50" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="Log_Datetime" Type="datetime" Nullable="false" />
+          <Property Name="Object_Id" Type="int" />
+          <Property Name="Object_Type " Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Payment_Id" />
+          </Key>
+          <Property Name="Payment_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Payment_Status_Ref_Id" Type="int" Nullable="false" />
+          <Property Name="Confirmation_Number" Type="nvarchar" MaxLength="250" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="Payment_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Payment_Method_Ref">
+          <Key>
+            <PropertyRef Name="Payment_Method_Ref_Id" />
+          </Key>
+          <Property Name="Payment_Method_Ref_Id" Type="int" Nullable="false" />
+          <Property Name="Payment_Method" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment_Status_Ref">
+          <Key>
+            <PropertyRef Name="Payment_Status_Ref_Id" />
+          </Key>
+          <Property Name="Payment_Status_Ref_Id" Type="int" Nullable="false" />
+          <Property Name="Payment_Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="PayPal">
+          <Key>
+            <PropertyRef Name="PayPal_Id" />
+          </Key>
+          <Property Name="PayPal_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Phone_Id" />
+          </Key>
+          <Property Name="Phone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Branch_Id" Type="int" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone_Type" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="Reservation_Id" />
+          </Key>
+          <Property Name="Reservation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Start_Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="End_Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Creation_Date" Type="datetime" Nullable="false" />
+          <Property Name="Field_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address_Id" Type="int" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Middle_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Creation_Date" Type="datetime" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Payment">
+          <Key>
+            <PropertyRef Name="User_Payment_Id" />
+          </Key>
+          <Property Name="User_Payment_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Payment_Method_Ref_Id" Type="int" Nullable="false" />
+          <Property Name="Card_Id" Type="int" />
+          <Property Name="PayPal_Id" Type="int" />
+          <Property Name="Creation_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Branch_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Address_Id" />
+            </Principal>
+            <Dependent Role="Branch">
+              <PropertyRef Name="Address_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Branch_Business">
+          <End Role="Business" Type="Self.Business" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Business">
+              <PropertyRef Name="Business_Id" />
+            </Principal>
+            <Dependent Role="Branch">
+              <PropertyRef Name="Business_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Card_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Card" Type="Self.Card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Card">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Branch_Id" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="Branch_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Payment_Status_Ref_Id">
+          <End Role="Payment_Status_Ref" Type="Self.Payment_Status_Ref" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment_Status_Ref">
+              <PropertyRef Name="Payment_Status_Ref_Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Payment_Status_Ref_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phone_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Branch_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="Branch_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phone_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Field">
+          <End Role="Field" Type="Self.Field" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Field">
+              <PropertyRef Name="Field_Id" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="Field_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Address_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Address_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payment_Card_Id">
+          <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+          <End Role="User_Payment" Type="Self.User_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="Card_Id" />
+            </Principal>
+            <Dependent Role="User_Payment">
+              <PropertyRef Name="Card_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payment_Payment_Method_Ref">
+          <End Role="Payment_Method_Ref" Type="Self.Payment_Method_Ref" Multiplicity="1" />
+          <End Role="User_Payment" Type="Self.User_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment_Method_Ref">
+              <PropertyRef Name="Payment_Method_Ref_Id" />
+            </Principal>
+            <Dependent Role="User_Payment">
+              <PropertyRef Name="Payment_Method_Ref_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payment_PayPal_Id">
+          <End Role="PayPal" Type="Self.PayPal" Multiplicity="0..1" />
+          <End Role="User_Payment" Type="Self.User_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayPal">
+              <PropertyRef Name="PayPal_Id" />
+            </Principal>
+            <Dependent Role="User_Payment">
+              <PropertyRef Name="PayPal_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RampUpProjectModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Business" EntityType="Self.Business" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Field" EntityType="Self.Field" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment_Method_Ref" EntityType="Self.Payment_Method_Ref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment_Status_Ref" EntityType="Self.Payment_Status_Ref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayPal" EntityType="Self.PayPal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phone" EntityType="Self.Phone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Payment" EntityType="Self.User_Payment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Branch_Address" Association="Self.FK_Branch_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Branch" EntitySet="Branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Branch_Business" Association="Self.FK_Branch_Business">
+            <End Role="Business" EntitySet="Business" />
+            <End Role="Branch" EntitySet="Branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Card_User" Association="Self.FK_Card_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Card" EntitySet="Card" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_Branch" Association="Self.FK_Field_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Payment_Status_Ref_Id" Association="Self.FK_Payment_Payment_Status_Ref_Id">
+            <End Role="Payment_Status_Ref" EntitySet="Payment_Status_Ref" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phone_Branch" Association="Self.FK_Phone_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phone_User" Association="Self.FK_Phone_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Field" Association="Self.FK_Reservation_Field">
+            <End Role="Field" EntitySet="Field" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_User" Association="Self.FK_Reservation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Address" Association="Self.FK_User_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payment_Card_Id" Association="Self.FK_User_Payment_Card_Id">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="User_Payment" EntitySet="User_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payment_Payment_Method_Ref" Association="Self.FK_User_Payment_Payment_Method_Ref">
+            <End Role="Payment_Method_Ref" EntitySet="Payment_Method_Ref" />
+            <End Role="User_Payment" EntitySet="User_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payment_PayPal_Id" Association="Self.FK_User_Payment_PayPal_Id">
+            <End Role="PayPal" EntitySet="PayPal" />
+            <End Role="User_Payment" EntitySet="User_Payment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RampUpProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Address_Id" />
+          </Key>
+          <Property Name="Address_Id" Type="Int32" Nullable="false" />
+          <Property Name="First_Line" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Second_Line" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Postal_Code" Type="Int32" />
+          <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Branches" Relationship="Self.FK_Branch_Address" FromRole="Address" ToRole="Branch" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Address" FromRole="Address" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Branch_Id" />
+          </Key>
+          <Property Name="Branch_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Business_Id" Type="Int32" Nullable="false" />
+          <Property Name="Address_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_Branch_Address" FromRole="Branch" ToRole="Address" />
+          <NavigationProperty Name="Business" Relationship="Self.FK_Branch_Business" FromRole="Branch" ToRole="Business" />
+          <NavigationProperty Name="Fields" Relationship="Self.FK_Field_Branch" FromRole="Branch" ToRole="Field" />
+          <NavigationProperty Name="Phones" Relationship="Self.FK_Phone_Branch" FromRole="Branch" ToRole="Phone" />
+        </EntityType>
+        <EntityType Name="Business">
+          <Key>
+            <PropertyRef Name="Business_Id" />
+          </Key>
+          <Property Name="Business_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Branches" Relationship="Self.FK_Branch_Business" FromRole="Business" ToRole="Branch" />
+          <Property Name="User_Id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Card_Id" />
+          </Key>
+          <Property Name="Card_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" Nullable="false" />
+          <Property Name="Card_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CVC" Type="Int32" Nullable="false" />
+          <Property Name="Expiration_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Card_User" FromRole="Card" ToRole="User" />
+          <NavigationProperty Name="User_Payment" Relationship="Self.FK_User_Payment_Card_Id" FromRole="Card" ToRole="User_Payment" />
+        </EntityType>
+        <EntityType Name="Field">
+          <Key>
+            <PropertyRef Name="Field_Id" />
+          </Key>
+          <Property Name="Field_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Branch_Id" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Width" Type="Double" />
+          <Property Name="Length" Type="Double" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_Field_Branch" FromRole="Field" ToRole="Branch" />
+          <NavigationProperty Name="Reservations" Relationship="RampUpProjectModel.FK_Reservation_Field" FromRole="Field" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Payment_Id" />
+          </Key>
+          <Property Name="Payment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Payment_Status_Ref_Id" Type="Int32" Nullable="false" />
+          <Property Name="Confirmation_Number" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="Payment_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Payment_Status_Ref" Relationship="Self.FK_Payment_Payment_Status_Ref_Id" FromRole="Payment" ToRole="Payment_Status_Ref" />
+        </EntityType>
+        <EntityType Name="Payment_Method_Ref">
+          <Key>
+            <PropertyRef Name="Payment_Method_Ref_Id" />
+          </Key>
+          <Property Name="Payment_Method_Ref_Id" Type="Int32" Nullable="false" />
+          <Property Name="Payment_Method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User_Payment" Relationship="Self.FK_User_Payment_Payment_Method_Ref" FromRole="Payment_Method_Ref" ToRole="User_Payment" />
+        </EntityType>
+        <EntityType Name="Payment_Status_Ref">
+          <Key>
+            <PropertyRef Name="Payment_Status_Ref_Id" />
+          </Key>
+          <Property Name="Payment_Status_Ref_Id" Type="Int32" Nullable="false" />
+          <Property Name="Payment_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Payment_Status_Ref_Id" FromRole="Payment_Status_Ref" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="PayPal">
+          <Key>
+            <PropertyRef Name="PayPal_Id" />
+          </Key>
+          <Property Name="PayPal_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User_Payment" Relationship="Self.FK_User_Payment_PayPal_Id" FromRole="PayPal" ToRole="User_Payment" />
+        </EntityType>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Phone_Id" />
+          </Key>
+          <Property Name="Phone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Branch_Id" Type="Int32" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_Type" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_Phone_Branch" FromRole="Phone" ToRole="Branch" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Phone_User" FromRole="Phone" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="Reservation_Id" />
+          </Key>
+          <Property Name="Reservation_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Start_Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="End_Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Reservation_User" FromRole="Reservation" ToRole="User" />
+          <Property Name="Field_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Field" Relationship="RampUpProjectModel.FK_Reservation_Field" FromRole="Reservation" ToRole="Field" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address_Id" Type="Int32" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Middle_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_User_Address" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="Cards" Relationship="Self.FK_Card_User" FromRole="User" ToRole="Card" />
+          <NavigationProperty Name="Phones" Relationship="Self.FK_Phone_User" FromRole="User" ToRole="Phone" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_User" FromRole="User" ToRole="Reservation" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User_Payment">
+          <Key>
+            <PropertyRef Name="User_Payment_Id" />
+          </Key>
+          <Property Name="User_Payment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Payment_Method_Ref_Id" Type="Int32" Nullable="false" />
+          <Property Name="Card_Id" Type="Int32" />
+          <Property Name="PayPal_Id" Type="Int32" />
+          <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Card" Relationship="Self.FK_User_Payment_Card_Id" FromRole="User_Payment" ToRole="Card" />
+          <NavigationProperty Name="Payment_Method_Ref" Relationship="Self.FK_User_Payment_Payment_Method_Ref" FromRole="User_Payment" ToRole="Payment_Method_Ref" />
+          <NavigationProperty Name="PayPal" Relationship="Self.FK_User_Payment_PayPal_Id" FromRole="User_Payment" ToRole="PayPal" />
+        </EntityType>
+        <Association Name="FK_Branch_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Address_Id" />
+            </Principal>
+            <Dependent Role="Branch">
+              <PropertyRef Name="Address_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Address_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Address_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Branch_Business">
+          <End Role="Business" Type="Self.Business" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Business">
+              <PropertyRef Name="Business_Id" />
+            </Principal>
+            <Dependent Role="Branch">
+              <PropertyRef Name="Business_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Field_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Field" Type="Self.Field" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Branch_Id" />
+            </Principal>
+            <Dependent Role="Field">
+              <PropertyRef Name="Branch_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phone_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Branch_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="Branch_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Card_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Card" Type="Self.Card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Card">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payment_Card_Id">
+          <End Role="Card" Type="Self.Card" Multiplicity="0..1" />
+          <End Role="User_Payment" Type="Self.User_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="Card_Id" />
+            </Principal>
+            <Dependent Role="User_Payment">
+              <PropertyRef Name="Card_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Payment_Status_Ref_Id">
+          <End Role="Payment_Status_Ref" Type="Self.Payment_Status_Ref" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment_Status_Ref">
+              <PropertyRef Name="Payment_Status_Ref_Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Payment_Status_Ref_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payment_Payment_Method_Ref">
+          <End Role="Payment_Method_Ref" Type="Self.Payment_Method_Ref" Multiplicity="1" />
+          <End Role="User_Payment" Type="Self.User_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment_Method_Ref">
+              <PropertyRef Name="Payment_Method_Ref_Id" />
+            </Principal>
+            <Dependent Role="User_Payment">
+              <PropertyRef Name="Payment_Method_Ref_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payment_PayPal_Id">
+          <End Role="PayPal" Type="Self.PayPal" Multiplicity="0..1" />
+          <End Role="User_Payment" Type="Self.User_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayPal">
+              <PropertyRef Name="PayPal_Id" />
+            </Principal>
+            <Dependent Role="User_Payment">
+              <PropertyRef Name="PayPal_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phone_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RampUpProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Businesses" EntityType="Self.Business" />
+          <EntitySet Name="Cards" EntityType="Self.Card" />
+          <EntitySet Name="Fields" EntityType="Self.Field" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Payment_Method_Ref" EntityType="Self.Payment_Method_Ref" />
+          <EntitySet Name="Payment_Status_Ref" EntityType="Self.Payment_Status_Ref" />
+          <EntitySet Name="PayPals" EntityType="Self.PayPal" />
+          <EntitySet Name="Phones" EntityType="Self.Phone" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="User_Payment" EntityType="Self.User_Payment" />
+          <AssociationSet Name="FK_Branch_Address" Association="Self.FK_Branch_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Branch" EntitySet="Branches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Address" Association="Self.FK_User_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Branch_Business" Association="Self.FK_Branch_Business">
+            <End Role="Business" EntitySet="Businesses" />
+            <End Role="Branch" EntitySet="Branches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Field_Branch" Association="Self.FK_Field_Branch">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Field" EntitySet="Fields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phone_Branch" Association="Self.FK_Phone_Branch">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Phone" EntitySet="Phones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Card_User" Association="Self.FK_Card_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Card" EntitySet="Cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payment_Card_Id" Association="Self.FK_User_Payment_Card_Id">
+            <End Role="Card" EntitySet="Cards" />
+            <End Role="User_Payment" EntitySet="User_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Payment_Status_Ref_Id" Association="Self.FK_Payment_Payment_Status_Ref_Id">
+            <End Role="Payment_Status_Ref" EntitySet="Payment_Status_Ref" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payment_Payment_Method_Ref" Association="Self.FK_User_Payment_Payment_Method_Ref">
+            <End Role="Payment_Method_Ref" EntitySet="Payment_Method_Ref" />
+            <End Role="User_Payment" EntitySet="User_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payment_PayPal_Id" Association="Self.FK_User_Payment_PayPal_Id">
+            <End Role="PayPal" EntitySet="PayPals" />
+            <End Role="User_Payment" EntitySet="User_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phone_User" Association="Self.FK_Phone_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Phone" EntitySet="Phones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_User" Association="Self.FK_Reservation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Field" Association="RampUpProjectModel.FK_Reservation_Field">
+            <End Role="Field" EntitySet="Fields" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <EntitySet Name="Logs" EntityType="RampUpProjectModel.Log" />
+        </EntityContainer>
+        <Association Name="FK_Reservation_Field">
+          <End Type="RampUpProjectModel.Field" Role="Field" Multiplicity="1" />
+          <End Type="RampUpProjectModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Field">
+              <PropertyRef Name="Field_Id" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="Field_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Log_Id" />
+          </Key>
+          <Property Name="Log_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Log_Function" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Log_Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Object_Id" Type="Int32" />
+          <Property Name="Object_Type_" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RampUpProjectModelStoreContainer" CdmEntityContainer="RampUpProjectEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Address_Id" ColumnName="Address_Id" />
+                <ScalarProperty Name="First_Line" ColumnName="First_Line" />
+                <ScalarProperty Name="Second_Line" ColumnName="Second_Line" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Postal_Code" ColumnName="Postal_Code" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="Branch_Id" ColumnName="Branch_Id" />
+                <ScalarProperty Name="Business_Id" ColumnName="Business_Id" />
+                <ScalarProperty Name="Address_Id" ColumnName="Address_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Businesses">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Business">
+              <MappingFragment StoreEntitySet="Business">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Business_Id" ColumnName="Business_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cards">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Card">
+              <MappingFragment StoreEntitySet="Card">
+                <ScalarProperty Name="Card_Id" ColumnName="Card_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Card_Number" ColumnName="Card_Number" />
+                <ScalarProperty Name="CVC" ColumnName="CVC" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fields">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Field">
+              <MappingFragment StoreEntitySet="Field">
+                <ScalarProperty Name="Field_Id" ColumnName="Field_Id" />
+                <ScalarProperty Name="Branch_Id" ColumnName="Branch_Id" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Payment_Id" ColumnName="Payment_Id" />
+                <ScalarProperty Name="Payment_Status_Ref_Id" ColumnName="Payment_Status_Ref_Id" />
+                <ScalarProperty Name="Confirmation_Number" ColumnName="Confirmation_Number" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment_Method_Ref">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Payment_Method_Ref">
+              <MappingFragment StoreEntitySet="Payment_Method_Ref">
+                <ScalarProperty Name="Payment_Method_Ref_Id" ColumnName="Payment_Method_Ref_Id" />
+                <ScalarProperty Name="Payment_Method" ColumnName="Payment_Method" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment_Status_Ref">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Payment_Status_Ref">
+              <MappingFragment StoreEntitySet="Payment_Status_Ref">
+                <ScalarProperty Name="Payment_Status_Ref_Id" ColumnName="Payment_Status_Ref_Id" />
+                <ScalarProperty Name="Payment_Status" ColumnName="Payment_Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayPals">
+            <EntityTypeMapping TypeName="RampUpProjectModel.PayPal">
+              <MappingFragment StoreEntitySet="PayPal">
+                <ScalarProperty Name="PayPal_Id" ColumnName="PayPal_Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phones">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Phone">
+              <MappingFragment StoreEntitySet="Phone">
+                <ScalarProperty Name="Phone_Id" ColumnName="Phone_Id" />
+                <ScalarProperty Name="Branch_Id" ColumnName="Branch_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Phone_Type" ColumnName="Phone_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="Field_Id" ColumnName="Field_Id" />
+                <ScalarProperty Name="Reservation_Id" ColumnName="Reservation_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RampUpProjectModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Address_Id" ColumnName="Address_Id" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Payment">
+            <EntityTypeMapping TypeName="RampUpProjectModel.User_Payment">
+              <MappingFragment StoreEntitySet="User_Payment">
+                <ScalarProperty Name="User_Payment_Id" ColumnName="User_Payment_Id" />
+                <ScalarProperty Name="Payment_Method_Ref_Id" ColumnName="Payment_Method_Ref_Id" />
+                <ScalarProperty Name="Card_Id" ColumnName="Card_Id" />
+                <ScalarProperty Name="PayPal_Id" ColumnName="PayPal_Id" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="RampUpProjectModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Object_Type_" ColumnName="Object_Type " />
+                <ScalarProperty Name="Object_Id" ColumnName="Object_Id" />
+                <ScalarProperty Name="Log_Datetime" ColumnName="Log_Datetime" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Log_Function" ColumnName="Log_Function" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Log_Id" ColumnName="Log_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
